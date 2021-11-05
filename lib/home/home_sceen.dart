@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rock_paper_scissors_game/home/widgets/header.dart';
-import 'package:rock_paper_scissors_game/home/widgets/option_widget.dart';
+import 'package:rock_paper_scissors_game/home/widgets/options_choice.dart';
+import 'package:rock_paper_scissors_game/home/widgets/single_options_widget.dart';
 import 'package:rock_paper_scissors_game/home/widgets/rules.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,7 +32,7 @@ class _HomeSceenState extends State<HomeSceen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Align(alignment: Alignment.topCenter, child: Header()),
-                Option(
+                OptionsChoices(
                   color: HSLColor.fromAHSL(1.0, 40, .84, .53).toColor(),
                 ),
                 // Rules()
