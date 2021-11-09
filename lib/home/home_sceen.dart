@@ -35,13 +35,19 @@ class _HomeSceenState extends State<HomeSceen> {
         return Result(choiceName: userChoice!, computerChoice: computerChoice);
 
       case GameStatus.choosing:
+        // default:
+        return const OptionsChoices();
+
+      case GameStatus.draw:
+        return Result(choiceName: userChoice!, computerChoice: computerChoice);
+
       default:
         return const OptionsChoices();
     }
   }
 
   Widget _showRules(BuildContext context) {
-    return Rules();
+    return const Rules();
   }
 
   @override
@@ -50,6 +56,8 @@ class _HomeSceenState extends State<HomeSceen> {
     ChoiceName? computerChoice =
         Provider.of<ResultController>(context).computerChoosed;
     GameState gameState = Provider.of<ResultController>(context).gameStatus;
+
+    int score = Provider.of<ResultController>(context).getScore;
 
     return Scaffold(
       body: Container(
@@ -65,13 +73,13 @@ class _HomeSceenState extends State<HomeSceen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(alignment: Alignment.topCenter, child: Header()),
-
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Header(
+                      score: '$score',
+                    )),
                 setGameStatusWidgets(
                     context, userChoice, computerChoice, gameState),
-
-                // Result(),
-                // Rules()
                 GestureDetector(
                   onTap: () {
                     showDialog(
@@ -84,7 +92,7 @@ class _HomeSceenState extends State<HomeSceen> {
                     child: Text(
                       "RULES",
                       style: GoogleFonts.barlowSemiCondensed(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,

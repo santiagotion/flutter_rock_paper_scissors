@@ -9,9 +9,15 @@ import 'package:rock_paper_scissors_game/helper/game_status.dart';
 class ResultController with ChangeNotifier {
   GameState gameState = GameState.choosing();
 
+  int score = 0;
+
   ChoiceName? userChoice;
 
   ChoiceName? computerChoice;
+
+  int get getScore {
+    return score;
+  }
 
   ChoiceName? get userChoosed {
     return userChoice;
@@ -27,6 +33,7 @@ class ResultController with ChangeNotifier {
 
   getResult(ChoiceName userChoice, ChoiceName computerChoice) {
     gameState = GameLogic().getResult(userChoice, computerChoice);
+    getActualScore(gameState);
 
     notifyListeners();
   }
@@ -38,7 +45,7 @@ class ResultController with ChangeNotifier {
 
     notifyListeners();
 
-    Timer(const Duration(milliseconds: 800), () async {
+    Timer(const Duration(milliseconds: 1000), () async {
       List<ChoiceName> choiceList = [
         ChoiceName.scissors,
         ChoiceName.lizard,
@@ -50,14 +57,36 @@ class ResultController with ChangeNotifier {
 
       var randomChoice = choiceList[_random.nextInt(choiceList.length)];
 
-      gameState = getResult(userChoosed, ChoiceName.spock);
+      computerChoice = randomChoice;
 
-      print(userChoosed);
-      print(randomChoice);
+      gameState = getResult(userChoosed, randomChoice);
     });
   }
 
   resetGame() {
     gameState.status = GameStatus.choosing;
+    notifyListeners();
+  }
+
+  getActualScore(GameState gameState) {
+    switch (gameState.status) {
+      case GameStatus.choosing:
+        break;
+      case GameStatus.choosed:
+        break;
+      case GameStatus.won:
+        score += 1;
+
+        notifyListeners();
+        break;
+      case GameStatus.loosed:
+        score -= 1;
+        notifyListeners();
+        break;
+      case GameStatus.draw:
+        break;
+      default:
+        break;
+    }
   }
 }

@@ -21,8 +21,19 @@ class GameLogic {
         case "lizardpaper":
         case "spockrock":
           return GameState.won(computer);
-        default:
+        case "paperscissors":
+        case "rockpaper":
+        case "lizardrock":
+        case "spocklizard":
+        case "scissorsspock":
+        case "lizardscissors":
+        case "spockpaper":
+        case "scissorsrock":
+        case "paperlizard":
+        case "rockspock":
           return GameState.loosed(computer);
+        default:
+          return GameState.draw(computer);
       }
     }
   }

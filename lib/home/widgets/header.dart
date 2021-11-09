@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Header extends StatelessWidget {
+  final String score;
+
+  const Header({Key? key, required this.score}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +40,7 @@ class Header extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "SCORE",
+                            "Score",
                             style: GoogleFonts.barlowSemiCondensed(
                               textStyle: TextStyle(
                                 color:
@@ -49,7 +52,7 @@ class Header extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "12",
+                            score,
                             style: GoogleFonts.barlowSemiCondensed(
                               textStyle: TextStyle(
                                 color:

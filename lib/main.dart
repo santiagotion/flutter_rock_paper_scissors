@@ -17,12 +17,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: ResultController()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Game',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeSceen(),
+        home: const HomeSceen(),
       ),
     );
   }
