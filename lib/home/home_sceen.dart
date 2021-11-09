@@ -1,22 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:rock_paper_scissors_game/helper/choice_properties.dart';
+import 'package:rock_paper_scissors_game/helper/game_status.dart';
 import 'package:rock_paper_scissors_game/home/widgets/header.dart';
 import 'package:rock_paper_scissors_game/home/widgets/options_choice.dart';
-import 'package:rock_paper_scissors_game/home/widgets/single_options_widget.dart';
+import 'package:rock_paper_scissors_game/home/widgets/result.dart';
+import 'package:provider/provider.dart';
 import 'package:rock_paper_scissors_game/home/widgets/rules.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'controller/result_contoller.dart';
+
 class HomeSceen extends StatefulWidget {
+  const HomeSceen({Key? key}) : super(key: key);
+
   @override
   _HomeSceenState createState() => _HomeSceenState();
 }
 
 class _HomeSceenState extends State<HomeSceen> {
+  Widget setGameStatusWidgets(BuildContext context, ChoiceName? userChoice,
+      ChoiceName? computerChoice, GameState gameState) {
+    switch (gameState.status) {
+      case GameStatus.choosed:
+        return Result(
+          choiceName: userChoice!,
+        );
+      case GameStatus.won:
+        return Result(
+          choiceName: userChoice!,
+          computerChoice: computerChoice,
+        );
+
+      case GameStatus.loosed:
+        return Result(choiceName: userChoice!, computerChoice: computerChoice);
+
+      case GameStatus.choosing:
+      default:
+        return const OptionsChoices();
+    }
+  }
+
   Widget _showRules(BuildContext context) {
     return Rules();
   }
 
   @override
   Widget build(BuildContext context) {
+    ChoiceName? userChoice = Provider.of<ResultController>(context).userChoosed;
+    ChoiceName? computerChoice =
+        Provider.of<ResultController>(context).computerChoosed;
+    GameState gameState = Provider.of<ResultController>(context).gameStatus;
+
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -32,9 +66,11 @@ class _HomeSceenState extends State<HomeSceen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Align(alignment: Alignment.topCenter, child: Header()),
-                OptionsChoices(
-                  color: HSLColor.fromAHSL(1.0, 40, .84, .53).toColor(),
-                ),
+
+                setGameStatusWidgets(
+                    context, userChoice, computerChoice, gameState),
+
+                // Result(),
                 // Rules()
                 GestureDetector(
                   onTap: () {
